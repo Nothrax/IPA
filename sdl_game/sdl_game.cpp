@@ -58,6 +58,7 @@ Uint32 timer_callbackfunc(Uint32 interval, void *param)
 	//printf("Callback called back with message: %s\n", (char*)param);
 
 	/* xzajic16 *********************************************************************************************/
+	//Pricitam si jednotlive pulsy (10ms kazda) pokud jsem na maximální hodnote resetuju
 	pulses++;
 	if (pulses == INT_MAX) pulses = 0;
 	/* xzajic16 *********************************************************************************************/
@@ -71,6 +72,8 @@ Uint32 timer_callbackfunc(Uint32 interval, void *param)
 }
 
 /* xzajic16*********************************************************************************************/
+//Pri volani teto funkce kontroluji jestli ubehl dany interval, vyhodou je ze pomoci jednoho timeru mohu
+//hlidat libovolny cas do INT_MAX
 bool timeUp(int i) {
 	i /= 10;
 
@@ -129,7 +132,6 @@ int main(int argc, char** argv)
 		aimAtPosition = (Ipa_algorithm_aim_at)GetProcAddress(hInstLibraryTrubka, "look_at");
 		fullMovement = (Ipa_algorithm_full_movement)GetProcAddress(hInstLibraryTrubka, "full_movement");
 		jumpMovement = (Ipa_algorithm_jump)GetProcAddress(hInstLibraryTrubka, "jump_movement");
-		cout << jumpMovement << "\n";
 		/* xtrubk00 *********************************************************************************************/
 	}
 
@@ -157,6 +159,7 @@ int main(int argc, char** argv)
 		}
 		proceed(event);
 		/* xzajic16 *********************************************************************************************/
+		//Kazdou sekundu vypise aktualni obsah inventare a pomocne hodnoty
 		if (timeUp(1000)) printInv();
 		/* xzajic16 *********************************************************************************************/
 	}
@@ -218,23 +221,25 @@ void proceed(SDL_Event event)
 
 
 	/* xzajic16 *********************************************************************************************/
-		glEnable(GL_COLOR_MATERIAL);
+	//Setup pro 2D vykreslovani
+	glEnable(GL_COLOR_MATERIAL);
 
-		glMatrixMode(GL_PROJECTION);
-		glPushMatrix();
-		glLoadIdentity();
-		glOrtho(0.0, W_WIDTH, W_HEIGHT, 0.0, -1.0, 10.0);
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	glOrtho(0.0, W_WIDTH, W_HEIGHT, 0.0, -1.0, 10.0);
 
 
-		glClear(GL_DEPTH_BUFFER_BIT);
+	glClear(GL_DEPTH_BUFFER_BIT);
 
-		if(drawInv) drawInv();
-		if(drawStam) drawStam();
+	//Vykreslovavi inventare a stamina baru ve 2D
+	if(drawInv) drawInv();
+	if(drawStam) drawStam();
 	
-
-		glMatrixMode(GL_PROJECTION);
-		glPopMatrix();
-		glMatrixMode(GL_MODELVIEW);
+	//Uklizeni po 2d vykreslovani
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
 	/* xzajic16 *********************************************************************************************/
 
 
@@ -242,6 +247,7 @@ void proceed(SDL_Event event)
 	gest_terrain(RETURN).disp();
 
 	/* xzajic16 *********************************************************************************************/
+	//Vykreslovani itemu v hraci plose
 	glPushMatrix();
 	glTranslatef(170.0f, 170.0f, 1.0f);
 	glScaled(5.0f, 5.0f, 5.0f);
@@ -430,6 +436,7 @@ Vector place_cam(SDL_Event event)
 		ExitProcess(0);
 
 	/* xzajic16 *********************************************************************************************/
+	//detekce kolize s itemem - nastaveni flagu na zvednuti itemu
 	itemDetection(&position);
 	/* xzajic16 *********************************************************************************************/
 
@@ -497,12 +504,16 @@ void disp_fling(objet fling, Vector camera)
 			decalageY -= .002;
 	}
 
+	/* xzajic16 *********************************************************************************************/
+	//Pridani podminky obsazeni itemu v inventari pro povoleni strelby
 	if (SDL_GetMouseState(NULL, NULL) & SDL_BUTTON(1) && recul <= 0 && getActiveCount() > 0)// click gauche de souris
 	{
 		recul = .08;
 		//shot(camera);
+		//Odeber itemy z inventare
 		removeItem(2);
 	}
+	/* xzajic16 *********************************************************************************************/
 	else
 	{
 		if (recul >= 0)

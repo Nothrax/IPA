@@ -53,6 +53,7 @@ extern "C" DLLDIR void  printcube(int type)
 
 		glBegin(GL_QUADS);
 
+		//Volba barvy kostky podle typu
 		if (type == 1) glColor3f(1.0f, 0.0f, 1.0f);     // Magenta
 		if (type == 2) glColor3f(1.0f, 0.0f, 0.0f);     // Red
 		if (type == 3) glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
@@ -87,10 +88,12 @@ extern "C" DLLDIR void  printcube(int type)
 		glVertex3f(1.0f, 1.0f, 1.0f);
 		glVertex3f(1.0f, -1.0f, 1.0f);
 		glVertex3f(1.0f, -1.0f, -1.0f);
-		glEnd();  // End of drawing color-cube
+		glEnd();
 	}
 
 extern "C" DLLDIR void printInv() {
+	//Vypsani inventare a pomocnych hodnot pro debug 
+	//puvodne slouzilo misto grafickeho vykreslovani pro kontrolu funkci
 	printf("\n******* Inventory *******\n");
 	printf("Active item: %d\n", getActive());
 	printf("Stamina: %d\n", getStam());
@@ -104,6 +107,7 @@ extern "C" DLLDIR void printInv() {
 }
 
 extern "C" DLLDIR void  drawInv() {
+	//Kontrola jestli je item v dosahu - povoluje jeho zvednuti - vykresluje zeleny ctverec pro vizualizaci kolize
 	int inRange = getRange();
 	if (inRange) {
 		glBegin(GL_QUADS);
@@ -116,15 +120,20 @@ extern "C" DLLDIR void  drawInv() {
 
 		glEnd();
 
+		//Vlozi prvk, ktery je v dosahu do inventare - pokud je to mozne
+		//nsatavi flag pri nabezne hrane - to zajisti vyhodnoceni stisku pouze jednou 
 		if (keystates[SDL_SCANCODE_E]) insertItem(inRange);
 	}
-
+	//zruseni flagu stisku klavesy v asm
 	if (!keystates[SDL_SCANCODE_E]) setUnpressed();
 
+
+	//Vykreslovani slotu inventare 
 	for (int i = 0; i < 10; i++) {
 		int j = i + 1;
 		if (keystates[SDL_SCANCODE_1 + i]) active = i;
 
+		//Kontola kolecka mysi
 		if (SDL_PollEvent(&Event)) {
 			if (Event.wheel.y == 1 || Event.wheel.y == -1) {
 				if (Event.wheel.y == 1) active--;
@@ -139,12 +148,14 @@ extern "C" DLLDIR void  drawInv() {
 
 		glBegin(GL_QUADS);
 		
+		//Nasteveni barvy slotu podle jeho obsahu
 		glColor3f(0.05f, 0.05f, 0.05f);  // Grey
 		if (getType(i) == 1) glColor3f(1.0f, 0.0f, 1.0f);     // Magenta
 		if (getType(i) == 2) glColor3f(1.0f, 0.0f, 0.0f);     // Red
 		if (getType(i) == 3) glColor3f(1.0f, 1.0f, 0.0f);     // Yellow
 		if (getType(i) == 4) glColor3f(0.0f, 0.0f, 1.0f);     // Blue
 
+		//Pokud je dany slot vybrany vykreli vetsi obdelnik
 		if (i == getActive()) {
 			glVertex2f(60, 30 + j * 40);
 			glVertex2f(60, 0.0 + j * 40);			
@@ -164,7 +175,7 @@ extern "C" DLLDIR void  drawInv() {
 
 extern "C" DLLDIR void  drawStam() {
 	glBegin(GL_QUADS);
-
+	//Vykresli aktualni staminu
 	glColor3f(1.0f, 0.6f, 0.0f);
 	glVertex2f(getStam(), 30.0f);
 	glVertex2f(getStam(), 10.0f);
@@ -174,7 +185,7 @@ extern "C" DLLDIR void  drawStam() {
 	glEnd();
 
 	glBegin(GL_QUADS);
-
+	//Vykresli stamina bar v pozadi
 	glColor3f(0.05f, 0.05f, 0.05f);
 	glVertex2f(500.f, 30.0f);
 	glVertex2f(500.f, 10.0f);

@@ -1,0 +1,26 @@
+﻿Build started 12.12.2017 15:51:48.
+     1>Project "D:\vut\3\IPA\ipa_game_2017\IPA_zajic_trubka\IPA\sdl_game\sdl_game.vcxproj" on node 2 (Build target(s)).
+     1>ClCompile:
+         A:\VisualStudio\VC\bin\x86_amd64\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Yu"stdafx.h" /Fp"x64\Debug\sdl_game.pch" /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt collision.cpp get_pixel.cpp load_objects.cpp obj.cpp randspawn.cpp sdlglutils.cpp sdl_game.cpp sound.cpp
+         sound.cpp
+     1>d:\vut\3\ipa\ipa_game_2017\ipa_zajic_trubka\ipa\sdl_game\sound.cpp(33): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+         sdl_game.cpp
+     1>d:\vut\3\ipa\ipa_game_2017\ipa_zajic_trubka\ipa\sdl_game\sdl_game.cpp(648): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+         sdlglutils.cpp
+     1>d:\vut\3\ipa\ipa_game_2017\ipa_zajic_trubka\ipa\sdl_game\sdlglutils.cpp(322): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+         randspawn.cpp
+     1>d:\vut\3\ipa\ipa_game_2017\ipa_zajic_trubka\ipa\sdl_game\randspawn.cpp(20): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+         obj.cpp
+     1>d:\vut\3\ipa\ipa_game_2017\ipa_zajic_trubka\ipa\sdl_game\obj.cpp(362): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+         load_objects.cpp
+     1>d:\vut\3\ipa\ipa_game_2017\ipa_zajic_trubka\ipa\sdl_game\load_objects.cpp(337): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+         get_pixel.cpp
+     1>d:\vut\3\ipa\ipa_game_2017\ipa_zajic_trubka\ipa\sdl_game\get_pixel.cpp(35): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+         collision.cpp
+     1>d:\vut\3\ipa\ipa_game_2017\ipa_zajic_trubka\ipa\sdl_game\collision.cpp(30): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "stdafx.h"' to your source?
+         Generating Code...
+     1>Done Building Project "D:\vut\3\IPA\ipa_game_2017\IPA_zajic_trubka\IPA\sdl_game\sdl_game.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:00.17
